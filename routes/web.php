@@ -33,3 +33,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/', function() {
     return view('auth.beranda');
 });
+use App\Http\Controllers\Admin\OrderController;
+
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::resource('orders', OrderController::class)->except(['create', 'store']);
+});
