@@ -46,6 +46,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Kembali</a>
     </form>
 </div>
 @endsection

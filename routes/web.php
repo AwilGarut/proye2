@@ -40,3 +40,15 @@ Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.
 
 // Simpan barang
 Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
+
+// Menampilkan daftar barang
+Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+
+// Menampilkan form edit
+Route::get('/barang/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
+
+// Update data barang
+Route::put('/barang/{id}/update', [BarangController::class, 'update'])->name('barang.update');
+
+// Hapus data barang
+Route::delete('/barang/{id}/delete', [BarangController::class, 'destroy'])->name('barang.delete');
