@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BarangController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,15 +22,21 @@ Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'index'
 
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return auth()->user()->role === 'admin' 
-            ? view('dashboard.admin') 
-            : view('dashboard.user');
-    })->name('dashboard');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/dashboard', function () {
+//         return auth()->user()->role === 'admin' 
+//             ? view('dashboard.admin') 
+//             : view('dashboard.user');
+//     })->name('dashboard');
+// });
 
 
 Route::get('/', function() {
     return view('auth.beranda');
 });
+
+// Form tambah barang
+Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
+
+// Simpan barang
+Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
