@@ -24,13 +24,13 @@ Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'index'
 
 
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/dashboard', function () {
-//         return auth()->user()->role === 'admin' 
-//             ? view('dashboard.admin') 
-//             : view('dashboard.user');
-//     })->name('dashboard');
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return auth()->user()->role === 'admin' 
+            ? view('dashboard.admin') 
+            : view('dashboard.user');
+    })->name('dashboard');
+});
 
 
 Route::get('/', function() {
