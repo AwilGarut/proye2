@@ -46,7 +46,8 @@
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Simpan</button>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Kembali</a>
+        {{-- <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Kembali</a>
+        <a href="{{ route('barang.index') }}" class="btn btn-success">Lihat Daftar Barang</a> --}}
     </form>
 </div>
 @endsection

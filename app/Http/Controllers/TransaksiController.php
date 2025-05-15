@@ -41,4 +41,8 @@ class TransaksiController extends Controller
 
         return redirect()->route('transaksi.success')->with('success', 'Transaksi berhasil!');
     }
+    public function success()
+{
+    return view('transaksi.success'); // atau response lainnya
+}
 }

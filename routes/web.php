@@ -12,7 +12,7 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
@@ -31,7 +31,11 @@ Route::middleware('auth')->group(function () {
             : view('dashboard.user');
     })->name('dashboard');
 });
-
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', function () {
+        return view('dashboard');
+    });
+});
 
 Route::get('/', function() {
     return view('auth.beranda');
@@ -63,6 +67,8 @@ Route::get('/transaksi/{id}', [TransaksiController::class, 'create'])->name('tra
 
 // Proses simpan transaksi
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+Route::get('/transaksi/success', [TransaksiController::class, 'success'])
+    ->name('transaksi.success');
 
 // Halaman admin (tanpa middleware)
 Route::prefix('admin')->middleware(['auth'])->group(function () {

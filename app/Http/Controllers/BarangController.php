@@ -26,37 +26,38 @@ class BarangController extends Controller
 
     // Simpan data barang
     public function store(Request $request)
-    {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
-            'nama_barang' => 'required|string|max:255',
-            'harga' => 'required|integer|min:0',
-            'stok' => 'required|integer|min:0',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maks 2MB
-        ]);
+{
+    // Validasi input
+    $validator = Validator::make($request->all(), [
+        'nama_barang' => 'required|string|max:255',
+        'harga' => 'required|integer|min:0',
+        'stok' => 'required|integer|min:0',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maks 2MB
+    ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        // Upload gambar jika ada
-        $gambarPath = null;
-        if ($request->hasFile('gambar')) {
-            $gambarPath = $request->file('gambar')->store('barang', 'public');
-        }
-
-        // Simpan ke database
-        Barang::create([
-            'nama_barang' => $request->input('nama_barang'),
-            'harga' => $request->input('harga'),
-            'stok' => $request->input('stok'),
-            'gambar' => $gambarPath,
-        ]);
-
-        return redirect()->route('barang.create')->with('success', 'Barang berhasil ditambahkan!');
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
     }
+
+    // Upload gambar jika ada
+    $gambarPath = null;
+    if ($request->hasFile('gambar')) {
+        $gambarPath = $request->file('gambar')->store('barang', 'public');
+    }
+
+    // Simpan ke database
+    Barang::create([
+        'nama_barang' => $request->input('nama_barang'),
+        'harga' => $request->input('harga'),
+        'stok' => $request->input('stok'),
+        'gambar' => $gambarPath,
+    ]);
+
+    // Redirect ke halaman daftar barang
+    return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
+}
     public function edit($id)
     {
         $barang = Barang::findOrFail($id);

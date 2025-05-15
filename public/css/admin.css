@@ -1,0 +1,54 @@
+body.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.container.py-4 {
+    max-width: 100%;
+    padding: 2rem;
+}
+
+.navbar {
+    border-radius: 10px;
+}
+
+h1 {
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 1.5rem;
+}
+
+.btn-group-dashboard {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.btn-group-dashboard .btn {
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+@media (max-width: 576px) {
+    .btn-group-dashboard {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .btn-group-dashboard .btn {
+        width: 100%;
+    }
+}
+
+.content-wrapper {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+footer {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
