@@ -12,7 +12,7 @@
 <nav class="navbar">
     <div class="logo">☕ Pader Ngopi Adventure</div>
     <ul class="nav-links">
-        <li><a href="#">Beranda</a></li>
+        <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profil</a>
         <li><a href="{{ route('barang.user') }}">Produk</a></li>
         <li>
             <form action="{{ route('logout') }}" method="POST" class="d-inline">
@@ -30,8 +30,8 @@
         <h1>Selamat Datang Pader Ngopi Adventure</h1>
         <p>Selamat datang di Pader Ngopi Adventure. Temukan dan sewa perlengkapan camping terbaik untuk petualangan seru Anda.</p>
         <div class="buttons">
-            <a href="{{ route('barang.user') }}" class="btn btn-primary">Lihat Produk</a>
-            <a href="#" class="btn btn-secondary">Tentang Kami</a>
+            <a href="{{ route('barang.user') }}" class="btn btn-primary">LIHAT PRODUK</a>
+            <a href="#" class="btn btn-secondary">BANTUAN</a>
         </div>
     </div>
 </section>
