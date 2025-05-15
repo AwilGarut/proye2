@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return auth()->user()->role === 'admin' 
             ? view('dashboard.admin') 
-            : view('dashboard.user');
+            : view('user.barang.index');
     })->name('dashboard');
 });
 Route::middleware('auth')->group(function () {
