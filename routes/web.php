@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -22,7 +23,10 @@ Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'index'
      ->middleware('auth') // Optional, bisa disesuaikan
      ->name('admin.users.index');
 
-
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
