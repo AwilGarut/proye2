@@ -10,6 +10,11 @@ use App\Models\Transaksi;
 
 class TransaksiController extends Controller
 {
+    public function index()
+    {
+        $transaksis = Transaksi::all(); // Ambil semua data transaksi
+        return view('user.transaksi.index', compact('transaksis'));
+    }
     // Tampilkan form transaksi
     public function create($id)
     {
@@ -32,6 +37,7 @@ class TransaksiController extends Controller
 
         // Simpan ke database
         Transaksi::create([
+            'nama_barang' => $barang->nama_barang,
             'barang_id' => $request->barang_id,
             'jumlah_sewa' => $request->jumlah_sewa,
             'durasi_sewa' => $request->durasi_sewa,
@@ -45,4 +51,5 @@ class TransaksiController extends Controller
 {
     return view('transaksi.success'); // atau response lainnya
 }
+ 
 }

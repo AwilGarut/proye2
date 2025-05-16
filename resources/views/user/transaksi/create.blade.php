@@ -16,10 +16,10 @@
         @csrf
         <input type="hidden" name="barang_id" value="{{ $barang->id }}">
 
-        {{-- <div class="form-group">
+        <div class="form-group">
             <label>Jumlah yang Disewa</label>
             <input type="number" name="jumlah_sewa" class="form-control" min="1" max="{{ $barang->stok }}" required>
-        </div> --}}
+        </div>
 
         <div class="form-group mt-3">
             <label>Durasi Sewa (hari)</label>
@@ -27,7 +27,7 @@
         </div>
 
         <button type="submit" class="btn btn-success mt-3">Sewa Sekarang</button>
-        <a href="{{ route('barang.user') }}" class="btn btn-secondary mt-3">DDDBatal</a>
+        <a href="{{ route('barang.user') }}" class="btn btn-secondary mt-3">Batal</a>
     </form>
 </div>
 @endsection

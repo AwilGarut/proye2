@@ -73,8 +73,14 @@ Route::get('/transaksi/{id}', [TransaksiController::class, 'create'])->name('tra
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 Route::get('/transaksi/success', [TransaksiController::class, 'success'])
     ->name('transaksi.success');
+Route::patch('/transaksi/{id}/update-status', [TransaksiController::class, 'updateStatus'])
+    ->name('transaksi.updateStatus');
+    
+Route::get('/transaksi/index', [TransaksiController::class, 'index'])->name('transaksi.index');
 
 // Halaman admin (tanpa middleware)
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('orders', OrderController::class);
 });
+
+Route::get('/pesanan', [TransaksiController::class, 'index']);
