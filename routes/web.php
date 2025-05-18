@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -22,15 +23,18 @@ Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'index'
      ->middleware('auth') // Optional, bisa disesuaikan
      ->name('admin.users.index');
 
-
-
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return auth()->user()->role === 'admin' 
-            ? view('dashboard.admin') 
-            : view('user.barang.index');
-    })->name('dashboard');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/dashboard', function () {
+//         return auth()->user()->role === 'admin' 
+//             ? view('dashboard.admin') 
+//             : view('dashboard.user');
+//     })->name('dashboard');
+// });
 Route::middleware('auth')->group(function () {
     Route::get('/admin', function () {
         return view('dashboard');
@@ -69,8 +73,18 @@ Route::get('/transaksi/{id}', [TransaksiController::class, 'create'])->name('tra
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 Route::get('/transaksi/success', [TransaksiController::class, 'success'])
     ->name('transaksi.success');
+Route::patch('/transaksi/{id}/update-status', [TransaksiController::class, 'updateStatus'])
+    ->name('transaksi.updateStatus');
+    
+Route::get('/transaksi/index', [TransaksiController::class, 'index'])->name('transaksi.index');
 
 // Halaman admin (tanpa middleware)
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('orders', OrderController::class);
 });
+
+Route::get('/pesanan', [TransaksiController::class, 'index']);
+
+use App\Http\Controllers\TransactionController;
+
+Route::get('/transaction', [TransactionController::class, 'createTransaction']);
