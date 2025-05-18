@@ -62,6 +62,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Nama Penyewa</th>
                         <th>Nama Barang</th>
                         <th>Jumlah Sewa</th>
                         <th>Durasi Sewa</th>
@@ -74,6 +75,7 @@
                     @foreach ($transaksis as $index => $transaksi)
                         <tr>
                             <td>{{ $index + 1 }}</td>
+                            <td>{{ $transaksi->nama_penyewa }}</td>
                             <td>{{ $transaksi->nama_barang }}</td>
                             <td>{{ $transaksi->jumlah_sewa }}</td>
                             <td>{{ $transaksi->durasi_sewa }} hari</td>

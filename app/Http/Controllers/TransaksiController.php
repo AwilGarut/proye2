@@ -26,6 +26,7 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'nama_penyewa' => 'required|string|max:255',
             'barang_id' => 'required|exists:barangs,id',
             'jumlah_sewa' => 'required|numeric|min:1',
             'durasi_sewa' => 'required|numeric|min:1',
@@ -37,6 +38,7 @@ class TransaksiController extends Controller
 
         // Simpan ke database
         Transaksi::create([
+            'nama_penyewa' => $request->nama_penyewa,
             'nama_barang' => $barang->nama_barang,
             'barang_id' => $request->barang_id,
             'jumlah_sewa' => $request->jumlah_sewa,

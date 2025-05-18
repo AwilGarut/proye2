@@ -22,6 +22,10 @@
     <form action="{{ route('transaksi.store') }}" method="POST">
         @csrf
         <input type="hidden" name="barang_id" value="{{ $barang->id }}">
+        <div class="form-group">
+            <label for="nama_penyewa">Nama Penyewa</label>
+            <input type="text" name="nama_penyewa" id="nama_penyewa" class="form-control" required>
+        </div>
 
         <div class="form-group">
             <label>Jumlah yang Disewa</label>
