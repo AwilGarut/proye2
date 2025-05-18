@@ -29,13 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return auth()->user()->role === 'admin' 
-            ? view('dashboard.admin') 
-            : view('dashboard.user');
-    })->name('dashboard');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/dashboard', function () {
+//         return auth()->user()->role === 'admin' 
+//             ? view('dashboard.admin') 
+//             : view('dashboard.user');
+//     })->name('dashboard');
+// });
 Route::middleware('auth')->group(function () {
     Route::get('/admin', function () {
         return view('dashboard');
