@@ -3,6 +3,8 @@
 @section('content')
 <div class="container">
     <h3>Sewa {{ $barang->nama_barang }}</h3>
+    
+
 
     <div class="card mb-4">
         <div class="card-body">
@@ -11,6 +13,11 @@
             <p>Stok tersedia: {{ $barang->stok }}</p>
         </div>
     </div>
+    <div class="position-absolute top-0 end-0 m-3">
+    <a href="{{ route('barang.user') }}" class="btn btn-primary">
+        <i class="bi bi-box-seam"></i> Lihat Semua Produk
+    </a>
+</div>
 
     <form action="{{ route('transaksi.store') }}" method="POST">
         @csrf

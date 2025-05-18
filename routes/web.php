@@ -8,6 +8,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CampingInfoController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -28,13 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/dashboard', function () {
-//         return auth()->user()->role === 'admin' 
-//             ? view('dashboard.admin') 
-//             : view('dashboard.user');
-//     })->name('dashboard');
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return auth()->user()->role === 'admin' 
+            ? view('dashboard.admin') 
+            : view('dashboard.user');
+    })->name('dashboard');
+});
 Route::middleware('auth')->group(function () {
     Route::get('/admin', function () {
         return view('dashboard');
@@ -84,3 +85,5 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 });
 
 Route::get('/pesanan', [TransaksiController::class, 'index']);
+
+Route::get('/bantuan', [CampingInfoController::class, 'index'])->name('camping.info');
