@@ -22,4 +22,5 @@ public function down()
         $table->dropColumn('avatar');
     });
 }
+
 };

@@ -1,28 +1,33 @@
 <?php
 
-// app/Http/Controllers/TransaksiController.php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Barang;
 use App\Models\Transaksi;
+use App\Services\MidtransService;
 
 class TransaksiController extends Controller
 {
+    protected $midtrans;
+
+    public function __construct(MidtransService $midtransService)
+    {
+        $this->midtrans = $midtransService;
+    }
+
     public function index()
     {
-        $transaksis = Transaksi::all(); // Ambil semua data transaksi
+        $transaksis = Transaksi::all();
         return view('user.transaksi.index', compact('transaksis'));
     }
-    // Tampilkan form transaksi
+
     public function create($id)
     {
         $barang = Barang::findOrFail($id);
         return view('user.transaksi.create', compact('barang'));
     }
 
-    // Simpan transaksi
     public function store(Request $request)
     {
         $request->validate([
@@ -32,26 +37,39 @@ class TransaksiController extends Controller
             'durasi_sewa' => 'required|numeric|min:1',
         ]);
 
-        // Hitung total harga
-        $barang = Barang::find($request->barang_id);
+        $barang = Barang::findOrFail($request->barang_id);
         $total_harga = $barang->harga * $request->jumlah_sewa * $request->durasi_sewa;
+        $orderId = 'INV-' . rand(100000, 999999);
 
-        // Simpan ke database
-        Transaksi::create([
+        $transaksi = Transaksi::create([
             'nama_penyewa' => $request->nama_penyewa,
             'nama_barang' => $barang->nama_barang,
             'barang_id' => $request->barang_id,
             'jumlah_sewa' => $request->jumlah_sewa,
             'durasi_sewa' => $request->durasi_sewa,
             'total_harga' => $total_harga,
-            'status' => 'pending', // atau sesuai logika aplikasi
+            'status' => 'pending',
+            'order_id' => $orderId,
         ]);
 
-        return redirect()->route('transaksi.success')->with('success', 'Transaksi berhasil!');
+        $transactionDetails = [
+            'transaction_details' => [
+                'order_id' => $orderId,
+                'gross_amount' => $total_harga,
+            ],
+            'customer_details' => [
+                'first_name' => $request->nama_penyewa,
+                // tambah email, phone jika diperlukan
+            ],
+        ];
+
+        $snapToken = $this->midtrans->getSnapToken($transactionDetails);
+
+        return view('user.transaksi.transaction', compact('snapToken', 'transaksi'));
     }
+
     public function success()
-{
-    return view('transaksi.success'); // atau response lainnya
-}
- 
+    {
+        return view('transaksi.success');
+    }
 }

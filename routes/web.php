@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CampingInfoController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -87,7 +88,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 Route::get('/pesanan', [TransaksiController::class, 'index']);
 
 
-use App\Http\Controllers\TransactionController;
 
-// Route::get('/transaction', [TransactionController::class, 'createTransaction']);
+
+Route::get('/transaction', [TransactionController::class, 'createTransaction']);
 Route::get('/bantuan', [CampingInfoController::class, 'index'])->name('camping.info');

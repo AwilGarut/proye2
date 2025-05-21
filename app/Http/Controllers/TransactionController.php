@@ -1,58 +1,57 @@
 <?php
 
-// namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
-// use App\Services\MidtransService;
+use Illuminate\Http\Request;
+use App\Models\Transaksi;
+use App\Models\Barang;
+use App\Services\MidtransService;
 
-// class TransactionController extends Controller
-// {
-//     protected $midtrans;
+class TransactionController extends Controller
+{
+    protected $midtrans;
 
-//     public function __construct(MidtransService $midtransService)
-//     {
-//         $this->midtrans = $midtransService;
-//     }
+    public function __construct(MidtransService $midtransService)
+    {
+        $this->midtrans = $midtransService;
+    }
 
-//    public function createTransaction(Request $request)
-//     {
-//         // Validasi input jika diperlukan
-//         $request->validate([
-//             'nama_penyewa' => 'required|string',
-//             'barang_id' => 'required|exists:barangs,id',
-//             'jumlah_sewa' => 'required|integer',
-//             'durasi_sewa' => 'required|integer',
-//             'total_harga' => 'required|integer',
-//         ]);
+    public function createTransaction(Request $request)
+    {
+        $request->validate([
+            'nama_penyewa' => 'required|string',
+            'barang_id' => 'required|exists:barangs,id',
+            'jumlah_sewa' => 'required|integer',
+            'durasi_sewa' => 'required|integer',
+        ]);
 
-//         // Generate order ID
-//         $orderId = 'INV-' . rand(100000, 999999);
+        $barang = Barang::findOrFail($request->barang_id);
+        $total_harga = $barang->harga * $request->jumlah_sewa * $request->durasi_sewa;
+        $orderId = 'INV-' . rand(100000, 999999);
 
-//         // Simpan ke tabel transaksis
-//         $transaksi = Transaksi::create([
-//             'nama_penyewa' => $request->nama_penyewa,
-//             'barang_id' => $request->barang_id,
-//             'jumlah_sewa' => $request->jumlah_sewa,
-//             'durasi_sewa' => $request->durasi_sewa,
-//             'total_harga' => $request->total_harga,
-//             'status' => 'pending',
-//             'order_id' => $orderId, // tambahkan kolom order_id di tabel transaksis
-//         ]);
+        $transaksi = Transaksi::create([
+            'nama_penyewa' => $request->nama_penyewa,
+            'nama_barang' => $barang->nama_barang,
+            'barang_id' => $request->barang_id,
+            'jumlah_sewa' => $request->jumlah_sewa,
+            'durasi_sewa' => $request->durasi_sewa,
+            'total_harga' => $total_harga,
+            'status' => 'pending',
+            'order_id' => $orderId,
+        ]);
 
-//         // Detail transaksi untuk Midtrans
-//         $transactionDetails = [
-//             'transaction_details' => [
-//                 'order_id' => $orderId,
-//                 'gross_amount' => $transaksi->total_harga,
-//             ],
-//             'customer_details' => [
-//                 'first_name' => $request->nama_penyewa,
-//                 // tambahkan field lain seperti email, phone, dll
-//             ],
-//         ];
+        $transactionDetails = [
+            'transaction_details' => [
+                'order_id' => $orderId,
+                'gross_amount' => $total_harga,
+            ],
+            'customer_details' => [
+                'first_name' => $request->nama_penyewa,
+            ],
+        ];
 
-//         $snapToken = $this->midtrans->getSnapToken($transactionDetails);
+        $snapToken = $this->midtrans->getSnapToken($transactionDetails);
 
-//         return view('transaction', compact('snapToken', 'transaksi'));
-//     }
-// }
+        return view('user.transaksi.transaction', compact('snapToken', 'transaksi'));
+    }
+}

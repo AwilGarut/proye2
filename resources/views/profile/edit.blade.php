@@ -1,48 +1,42 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Profil')
-
 @section('content')
 <div class="container">
-    <h2 class="text-center mb-4">Edit Profil</h2>
+    <h2>Edit Profil</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    {{-- Tampilkan foto avatar --}}
+    @if ($user->avatar)
+        <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Foto Profil" width="150" class="rounded mb-3">
+    @else
+        <img src="{{ asset('default-avatar.png') }}" alt="Default Avatar" width="150" class="rounded mb-3">
     @endif
 
     <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
-        <!-- Gambar Profil -->
-   <div class="text-center mb-4">
-    @if($user->avatar)
-    <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Avatar" class="rounded-circle" width="100">
-@else
-    <img src="{{ asset('images/default-avatar.png') }}" alt="Default Avatar" class="rounded-circle" width="100">
-@endif
-</div>
-
-        <!-- Username -->
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" name="username" id="username" class="form-control" value="{{ old('username', $user->username) }}" required>
+            <label for="username">Username</label>
+            <input type="text" name="username" value="{{ old('username', $user->username) }}" class="form-control">
         </div>
 
-        <!-- Email -->
         <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+            <label for="email">Email</label>
+            <input type="email" name="email" value="{{ old('email', $user->email) }}" class="form-control">
         </div>
 
-        <!-- Change Photo -->
         <div class="mb-3">
-            <label for="avatar" class="form-label">Change Photo</label>
-            <input type="file" name="avatar" id="avatar" class="form-control">
+            <label for="avatar">Upload Foto Profil</label>
+            <input type="file" name="avatar" class="form-control">
         </div>
 
-        <!-- Tombol Submit -->
-        <button type="submit" class="btn btn-success w-100">Update Profile</button>
+        <button type="submit" class="btn btn-primary">Update Profil</button>
     </form>
 </div>
 @endsection

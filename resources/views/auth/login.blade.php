@@ -3,12 +3,13 @@
 <head>
     <title>Login</title>
     <style>
-        body {
+       body {
             margin: 0;
             padding: 0;
             height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-family: 'Poppins', sans-serif;
+            background: url('../images/ngopi.jpeg');no-repeat center center fixed; /* Ganti dengan path gambar kamu */
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;

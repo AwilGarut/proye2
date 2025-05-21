@@ -14,7 +14,7 @@
             font-family: 'Segoe UI', sans-serif;
         }
         .hero {
-            background-image: url('/images/beranda-hero.jpeg'); /* Ganti dengan path gambar yang sesuai */
+            background-image: url('../images/ngopi.jpeg');  /* Ganti dengan path gambar yang sesuai */
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -34,6 +34,7 @@
         .hero-content {
             position: relative;
             z-index: 2;
+        
         }
         .hero h1 {
             font-size: 48px;
@@ -54,8 +55,8 @@
             padding: 8px 16px;
             border-radius: 5px;
             margin-left: 10px;
-            background-color: white;
-            color: #333;
+            background-color: rgb(50, 218, 56);
+            color: #f7f4f4;
             font-weight: bold;
             font-size: 14px;
             transition: background 0.3s ease;
