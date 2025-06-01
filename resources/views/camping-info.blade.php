@@ -29,7 +29,7 @@
 
         <section class="mb-4">
             <h2>Lokasi Layanan</h2>
-            <p>Kami melayani penyewaan di wilayah sekitar Indramayu</p>
+            <li>melayani penyewaan di wilayah sekitar Indramayu</li> 
         </section>
 
         <section class="mb-4">

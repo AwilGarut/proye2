@@ -11,7 +11,12 @@ class TransactionController extends Controller
 {
     protected $midtrans;
     
-
+ public function laporanIndex() // <-- PASTIKAN METHOD INI ADA
+    {
+        // Contoh isi method:
+        $transaksis = Transaksi::orderBy('created_at', 'desc')->paginate(15);
+        return view('laporan.index', compact('transaksis'));
+    }
     public function __construct(MidtransService $midtransService)
     {
         $this->midtrans = $midtransService;

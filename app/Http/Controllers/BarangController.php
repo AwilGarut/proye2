@@ -123,7 +123,12 @@ class BarangController extends Controller
 
 public function showAll()
 {
-    $barangs = \App\Models\Barang::where('stok', '>', 0)->get(); // hanya barang yang tersedia
+    // Anda menulis ini:
+    // $barangs = \App\Models\Barang::where('stok', '>', 0)->get();
+
+    // Karena Anda sudah memiliki "use App\Models\Barang;" di atas,
+    // Anda bisa menyederhanakannya menjadi:
+    $barangs = Barang::where('stok', '>', 0)->get(); // hanya barang yang tersedia
     return view('user.barang.index', compact('barangs'));
 }
 }

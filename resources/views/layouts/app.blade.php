@@ -62,6 +62,7 @@
         p  {
            color: rgb(17, 16, 16)
         }
+        
 
         .navbar-brand {
             font-weight: bold;

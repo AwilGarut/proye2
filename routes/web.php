@@ -5,11 +5,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BarangController;
-use App\Http\Controllers\Admin\OrderController;
+// use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CampingInfoController;
 use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -81,17 +82,18 @@ Route::patch('/transaksi/{id}/update-status', [TransaksiController::class, 'upda
 Route::get('/transaksi/index', [TransaksiController::class, 'index'])->name('transaksi.index');
 
 // Halaman admin (tanpa middleware)
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::resource('orders', OrderController::class);
-});
+// Route::prefix('admin')->middleware(['auth'])->group(function () {
+//     Route::resource('orders', OrderController::class);
+// });
 
 Route::get('/pesanan', [TransaksiController::class, 'index'])->name('admin.orders.update');
 
 
-
-
-Route::get('/transaction', [TransactionController::class, 'createTransaction']);
 // Route::post('/payment-notification', [TransactionController::class, 'handlePaymentNotification']);
 // Untuk menerima notifikasi pembayaran dari Midtrans
+
+Route::get('/transaction', [TransactionController::class, 'createTransaction']);
 Route::post('/midtrans/callback', [TransactionController::class, 'handleMidtransCallback']);
+Route::get('/laporan', [TransactionController::class, 'laporanIndex'])->name('laporan.index');
+Route::get('/laporan/{transaksi}', [TransactionController::class, 'laporanShow'])->name('laporan.show');
 Route::get('/bantuan', [CampingInfoController::class, 'index'])->name('camping.info');

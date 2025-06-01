@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pesanan</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap @5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -13,13 +12,18 @@
         }
 
         .container {
-            max-width: 800px;
-            margin-top: 50px;
+            max-width: 800px; /* Adjusted for better readability on larger screens */
+            margin: 50px auto; /* Centering the container */
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             text-align: center;
             color: #2c3e50;
+            margin-bottom: 30px; /* Added margin for spacing */
         }
 
         table {
@@ -29,18 +33,19 @@
         }
 
         th, td {
-            padding: 12px;
-            text-align: center;
+            padding: 12px 15px; /* Adjusted padding */
+            text-align: left; /* Align text to left for better readability, center for specific columns if needed */
+            border-bottom: 1px solid #dee2e6; /* Lighter border */
         }
 
-        .status-pending { color: #ffcc00; }
-        .status-success { color: #28a745; }
-        .status-failed { color: #dc3545; }
-        .status-canceled { color: #6c757d; }
+        th {
+            background-color: #e9ecef; /* Light grey background for headers */
+            color: #495057;
+            text-align: center; /* Center align table headers */
+        }
 
-        /* Dropdown Status */
-        .form-select {
-            min-width: 150px;
+        td {
+            text-align: center; /* Center align table data cells */
         }
 
         /* Footer */
@@ -49,6 +54,11 @@
             text-align: center;
             color: #6c757d;
         }
+
+        /* Ensure table is responsive */
+        .table-responsive {
+            overflow-x: auto;
+        }
     </style>
 </head>
 <body>
@@ -56,55 +66,42 @@
         <h1 class="text-center">Daftar Pesanan</h1>
 
         @if ($transaksis->isEmpty())
-            <p>Tidak ada pesanan ditemukan.</p>
+            <div class="alert alert-info text-center" role="alert">
+                Tidak ada pesanan ditemukan.
+            </div>
         @else
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Penyewa</th>
-                        <th>Nama Barang</th>
-                        <th>Jumlah Sewa</th>
-                        <th>Durasi Sewa</th>
-                        <th>Total Harga</th>
-                        <th>Status</th>
-                        <th>Dibuat pada</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($transaksis as $index => $transaksi)
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $transaksi->nama_penyewa }}</td>
-                            <td>{{ $transaksi->nama_barang }}</td>
-                            <td>{{ $transaksi->jumlah_sewa }}</td>
-                            <td>{{ $transaksi->durasi_sewa }} hari</td>
-                            <td>Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
-                            <td>
-                                <form action="{{ route('transaksi.updateStatus', $transaksi->id) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <select name="status" class="form-select form-select-sm">
-                                        <option value="pending" {{ $transaksi->status == 'pending' ? 'selected' : '' }}>belum bayar</option>
-                                        <option value="success" {{ $transaksi->status == 'success' ? 'selected' : '' }}>selesai</option>
-                                        
-                                    </select>
-                                </form>
-                            </td>
-                            <td>{{ $transaksi->created_at->format('d M Y H:i') }}</td>
+                            <th>No</th>
+                            <th>Nama Penyewa</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah Sewa</th>
+                            <th>Durasi Sewa</th>
+                            <th>Dibuat pada</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($transaksis as $index => $transaksi)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $transaksi->nama_penyewa }}</td>
+                                <td>{{ $transaksi->nama_barang }}</td>
+                                <td>{{ $transaksi->jumlah_sewa }}</td>
+                                <td>{{ $transaksi->durasi_sewa }} hari</td>
+                                <td>{{ $transaksi->created_at->format('d M Y H:i') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         @endif
 
-        <!-- Footer -->
         <footer class="mt-5 text-center">
-            <small>&copy; 2025 Your Company</small>
-        </footer>
+            <small>&copy; {{ date('Y') }} Your Company</small> </footer>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap @5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
