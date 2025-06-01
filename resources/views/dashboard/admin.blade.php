@@ -10,7 +10,7 @@
 
 <!-- Navbar -->
 <nav class="navbar">
-    <div class="logo">☕ Pader Ngopi Adventure</div>
+    <div class="logo">☕ Pader Ngopi Adventure Garut Jawa</div>
     <ul class="nav-links">
         {{-- <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profil</a> --}}
         {{-- <li><a href="{{ route('barang.user') }}">Produk</a></li> --}}
