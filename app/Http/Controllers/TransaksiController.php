@@ -40,6 +40,7 @@ class TransaksiController extends Controller
         $barang = Barang::findOrFail($request->barang_id);
         $total_harga = $barang->harga * $request->jumlah_sewa * $request->durasi_sewa;
         $orderId = 'INV-' . rand(100000, 999999);
+        
 
         $transaksi = Transaksi::create([
             'nama_penyewa' => $request->nama_penyewa,
@@ -70,6 +71,6 @@ class TransaksiController extends Controller
 
     public function success()
     {
-        return view('transaksi.success');
+        return view('transaksi.user');
     }
 }

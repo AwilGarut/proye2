@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Pembayaran Midtrans</title>
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js " data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <meta charset="UTF-8">
+    <title>Pembayaran</title>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js " data-client-key="{{ config('midtrans.client_key') }}"></script>
 </head>
 <body>
-    <h2>Transaksi Pembayaran</h2>
+    <h2>Bayar Sekarang</h2>
+
     <button id="pay-button">Bayar Sekarang</button>
 
     <script type="text/javascript">
-        document.getElementById('pay-button').onclick = function(){
-            snap.pay("{{ $snapToken }}", {
+        document.getElementById('pay-button').onclick = function () {
+            snap.pay('{{ $snapToken }}', {
                 onSuccess: function(result){
-                    alert("Pembayaran Berhasil!");
-                    console.log(result);
+                    console.log("Pembayaran Sukses", result);
+                    window.location.href = 'produk';
                 },
                 onPending: function(result){
-                    alert("Menunggu Pembayaran!");
-                    console.log(result);
+                    console.log("Menunggu Pembayaran", result);
+                    window.location.href = '/transaksi/pending';
                 },
                 onError: function(result){
-                    alert("Pembayaran Gagal!");
-                    console.log(result);
+                    console.log("Error", result);
+                    window.location.href = '/transaksi/gagal';
                 }
             });
         };

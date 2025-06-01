@@ -73,8 +73,8 @@ Route::get('/transaksi/{id}', [TransaksiController::class, 'create'])->name('tra
 
 // Proses simpan transaksi
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
-Route::get('/transaksi/success', [TransaksiController::class, 'success'])
-    ->name('transaksi.success');
+Route::get('/transaksi/user', [TransaksiController::class, 'success'])
+    ->name('transaksi.user');
 Route::patch('/transaksi/{id}/update-status', [TransaksiController::class, 'updateStatus'])
     ->name('transaksi.updateStatus');
     
@@ -85,10 +85,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('orders', OrderController::class);
 });
 
-Route::get('/pesanan', [TransaksiController::class, 'index']);
+Route::get('/pesanan', [TransaksiController::class, 'index'])->name('admin.orders.update');
 
 
 
 
 Route::get('/transaction', [TransactionController::class, 'createTransaction']);
+// Route::post('/payment-notification', [TransactionController::class, 'handlePaymentNotification']);
+// Untuk menerima notifikasi pembayaran dari Midtrans
+Route::post('/midtrans/callback', [TransactionController::class, 'handleMidtransCallback']);
 Route::get('/bantuan', [CampingInfoController::class, 'index'])->name('camping.info');
