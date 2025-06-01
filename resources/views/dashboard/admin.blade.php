@@ -41,6 +41,9 @@
         <div class="buttons d-flex justify-content-center gap-3">
             <a href="{{ route('barang.create') }}" class="btn btn-primary" style="background-color: #f39c12; color: white;">Tambah Barang</a>
             <a href="{{ route('users.index') }}" class="btn btn-primary">Lihat Daftar Pengguna</a>
+            <button onclick="window.location='{{ route('barang.index') }}'" class="btn btn-primary">
+    Lihat Daftar Barang
+</button>
         </div>
     </div>
 </div>

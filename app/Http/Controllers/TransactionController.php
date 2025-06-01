@@ -10,6 +10,7 @@ use App\Services\MidtransService;
 class TransactionController extends Controller
 {
     protected $midtrans;
+    
 
     public function __construct(MidtransService $midtransService)
     {
@@ -28,6 +29,7 @@ class TransactionController extends Controller
         $barang = Barang::findOrFail($request->barang_id);
         $total_harga = $barang->harga * $request->jumlah_sewa * $request->durasi_sewa;
         $orderId = 'INV-' . rand(100000, 999999);
+        
 
         $transaksi = Transaksi::create([
             'nama_penyewa' => $request->nama_penyewa,

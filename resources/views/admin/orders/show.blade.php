@@ -2,39 +2,46 @@
 
 @section('content')
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            Detail Pesanan #{{ $order->id }}
-        </div>
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <h5>Pengguna</h5>
-                    <p>{{ $order->user->name }}<br>{{ $order->user->email }}</p>
-                </div>
-                <div class="col-md-6">
-                    <h5>Alamat Pengiriman</h5>
-                    <p>{{ $order->address }}</p>
-                </div>
-            </div>
-
-            <h5>Produk</h5>
-            <p>{{ $order->campProduct->name }}</p>
-
-            <form action="{{ route('admin.orders.update', $order) }}" method="POST">
-                @csrf @method('PUT')
-                <div class="mb-3">
-                    <label>Status Pesanan</label>
-                    <select name="status" class="form-control">
-                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
-                        <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Selesai</option>
-                        <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Update Status</button>
-            </form>
-        </div>
-    </div>
+    <h2>Daftar Pesanan</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Penyewa</th>
+                <th>Nama Barang</th>
+                <th>Jumlah Sewa</th>
+                <th>Durasi Sewa</th>
+                <th>Total Harga</th>
+                <th>Status</th>
+                <th>Dibuat pada</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($orders as $order)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $order->user->name ?? 'Tidak ditemukan' }}</td>
+                <td>{{ $order->campProduct->name ?? 'Tidak ditemukan' }}</td>
+                <td>{{ $order->quantity }}</td>
+                <td>{{ $order->duration }} hari</td>
+                <td>Rp {{ number_format($order->total_price) }}</td>
+                <td>
+                    <form action="{{ route('admin.orders.update', $order) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <select name="status" class="form-control">
+                            <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
+                            <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Selesai</option>
+                            <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-primary mt-2">Update Status</button>
+                    </form>
+                </td>
+                <td>{{ $order->created_at->format('d M Y H:i') }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection
