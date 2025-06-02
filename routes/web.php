@@ -93,7 +93,8 @@ Route::get('/pesanan', [TransaksiController::class, 'index'])->name('admin.order
 // Untuk menerima notifikasi pembayaran dari Midtrans
 
 Route::get('/transaction', [TransactionController::class, 'createTransaction']);
-Route::post('/midtrans/callback', [TransactionController::class, 'handleMidtransCallback']);
+Route::post('/midtrans/callback', [TransactionController::class, 'handleCallback']);
+
 Route::get('/laporan', [TransactionController::class, 'laporanIndex'])->name('laporan.index');
 Route::get('/laporan/{transaksi}', [TransactionController::class, 'laporanShow'])->name('laporan.show');
 Route::get('/bantuan', [CampingInfoController::class, 'index'])->name('camping.info');
