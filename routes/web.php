@@ -104,13 +104,14 @@ Route::get('/bantuan', [CampingInfoController::class, 'index'])->name('camping.i
 
 Route::post('/payment/success', function(Request $request) {
 
-  $result_code = Transaksi::where('order_id', $request->result['order_id'])
-    ->update(['status' => 'success']);
-   $barang =   Barang::where('id',1)->first();
-   $stok = $barang->stok;
+    $result_code = Transaksi::where('order_id', $request->transaction_id)
+    ->first();
 
-   Barang::where("id",1)->update(['stok' => $stok -1]);
+    $result_code->update(['status' => 'success']);
 
+    $barang = Barang::where('id',$result_code->barang_id)->first();
+    $stok = $barang->stok;
+    Barang::where("id",$result_code->barang_id)->first()->update(['stok' => $stok - 1]);
 
     return response()->json([
         'stok' => $stok,
