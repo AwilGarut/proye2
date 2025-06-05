@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Blokir akses ke file sensitif
+<Files ~ "^\.(env|git|php_cs|editorconfig|md)$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files ~ "^(composer\.json|composer\.lock|package\.json)$">
+    Order allow,deny
+    Deny from all
+</Files>
